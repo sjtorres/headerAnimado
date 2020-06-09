@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, SafeAreaView, Image, 
   ScrollView, Animated, Text, View, 
-  Dimensions 
 } from 'react-native'
 
 import Constants from 'expo-constants'
@@ -11,15 +10,37 @@ export default function App() {
   const [scrollY, setScrollY] = useState(new Animated.Value(0))
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <Animated.View 
+        style={[styles.header,
+        {
+          height: scrollY.interpolate({
+            inputRange: [10, 160, 185],
+            outputRange: [140, 20, 0],
+            extrapolate: 'clamp'
+          }),
+          opacity: scrollY.interpolate({
+            inputRange: [1, 75, 170],
+            outputRange: [1, 1, 0],
+            extrapolate: 'clamp'
+          })
+        }
+        ]}
+      >
         <Image
           source={require('./assets/cam.png')}
           style={{ width: 30, height: 30 }}
           resizeMode='contain'
         />
-        <Image
+        <Animated.Image
           source={require('./assets/logo.png')}
-          style={{ width: 120, height: 40 }}
+          style={{ 
+            width: scrollY.interpolate({
+              inputRange: [0, 120],
+              outputRange: [240, 90],
+              extrapolate: 'clamp'
+            }), 
+            height: 90 
+          }}
           resizeMode='contain'
         />
         <Image
@@ -27,9 +48,17 @@ export default function App() {
           style={{ width: 30, height: 30 }}
           resizeMode='contain'
         />
-      </View>
+      </Animated.View>
 
-      <ScrollView>
+      <ScrollView
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{
+          nativeEvent: {
+            contentOffset: { y: scrollY }
+          },
+        }],
+        { useNativeDriver: false })}
+      >
         <View style={styles.box}></View>
 
         <View style={styles.box}></View>
