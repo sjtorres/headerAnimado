@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, SafeAreaView, Image, 
-  ScrollView, Animated, Text, View, 
+  ScrollView, Animated, View, 
 } from 'react-native'
 
 import Constants from 'expo-constants'
