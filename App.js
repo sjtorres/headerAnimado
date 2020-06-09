@@ -1,9 +1,16 @@
-import React from 'react';
-import { StyleSheet, SafeAreaView, Image, ScrollView, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { StyleSheet, SafeAreaView, Image, 
+  ScrollView, Animated, Text, View, 
+  Dimensions 
+} from 'react-native'
+
+import Constants from 'expo-constants'
+
 
 export default function App() {
+  const [scrollY, setScrollY] = useState(new Animated.Value(0))
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Image
           source={require('./assets/cam.png')}
@@ -32,7 +39,7 @@ export default function App() {
         <View style={styles.box}></View>
 
         <View style={styles.box}></View>
-        
+
         <View style={styles.box}></View>
       </ScrollView>
     
@@ -41,6 +48,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight + 5,
+  },
   header: {
     backgroundColor: '#101010',
     flexDirection: 'row',
@@ -49,7 +60,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingLeft: 10,
     borderBottomWidth: 2,
-    borderBottomColor: '#fff'
+    borderBottomColor: '#fff',
   },
   box: {
     height: 300,
